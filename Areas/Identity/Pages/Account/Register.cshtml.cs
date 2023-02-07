@@ -19,8 +19,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using WebSecurityDay3.Data;
+using WebSecurityDay3.Data.Services;
 using WebSecurityDay3.Repositories;
 using static WebSecurityDay3.Services.ReCAPTCHA;
+
 
 namespace WebSecurityDay3.Areas.Identity.Pages.Account
 {
@@ -34,6 +36,7 @@ namespace WebSecurityDay3.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
+        private readonly IEmailService _emailService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -42,7 +45,8 @@ namespace WebSecurityDay3.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IConfiguration configuration,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -52,6 +56,7 @@ namespace WebSecurityDay3.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _configuration = configuration;
             _context = context;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -167,12 +172,29 @@ namespace WebSecurityDay3.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    var response = await _emailService.SendSingleEmail(new Models.ComposeEmailModel
+                    {
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Subject = "Confirm your email",
+                        Email = Input.Email,
+                        Body = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
+                    });
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new
+                        {
+                            email = Input.Email
+                                                  ,
+                            returnUrl = returnUrl
+                                                  ,
+                            DisplayConfirmAccountLink = false
+                        });
+
                     }
                     else
                     {
