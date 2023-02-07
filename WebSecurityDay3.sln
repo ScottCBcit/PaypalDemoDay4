@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSecurityDay3", "WebSecurityDay3.csproj", "{153FE737-2904-47CF-82CF-95C401B81C7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{153FE737-2904-47CF-82CF-95C401B81C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153FE737-2904-47CF-82CF-95C401B81C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153FE737-2904-47CF-82CF-95C401B81C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153FE737-2904-47CF-82CF-95C401B81C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {555AD894-235A-4490-A681-CFCFA9BE7E1F}
+	EndGlobalSection
+EndGlobal

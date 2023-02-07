@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<WebSecurityDay3.ViewModel.RoleVM>
+
+@{
+    ViewData["Title"] = "Detail";
+    IEnumerable<MyRegisteredUser> users = ViewBag.Users;
+}
+
+<h3>@ViewBag.UserName</h3>
+
+<p>
+    @Html.ActionLink("Assign Roles", "Create",
+    new { userName = @ViewBag.UserName })
+</p>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th>
+                <p>First Name</p>
+            </th>
+            <th>
+                <p>Last Name</p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+
+                <td>
+                    @users.Where(e => e.Email == ViewBag.UserName).FirstOrDefault().FirstName
+                </td>
+
+
+                <td>
+                    @users.Where(e => e.Email == ViewBag.UserName).FirstOrDefault().LastName
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

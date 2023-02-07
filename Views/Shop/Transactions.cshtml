@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebSecurityDay3.Models.IPN>
+
+@{
+    ViewData["Title"] = "Transactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="fw-light">Transactions</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="d-none d-lg-block" >
+                @Html.DisplayNameFor(model => model.paymentID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.create_time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payerFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.paymentMethod)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paymentID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.create_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payerFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payerEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paymentMethod)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
