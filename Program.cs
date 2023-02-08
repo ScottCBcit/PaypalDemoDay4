@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
@@ -33,29 +33,31 @@ builder.Services.AddCors(options =>
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//.AddJwtBearer(options => {
-//    options.TokenValidationParameters =
-//    new TokenValidationParameters
-//    {
-//        ValidateIssuer = true
-//                                  ,
-//        ValidateAudience = true
-//                                  ,
-//        ValidateLifetime = true
-//                                  ,
-//        ValidateIssuerSigningKey = true
-//                                  ,
-//        ValidIssuer =
-//                                        builder.Configuration["Jwt:Issuer"]
-//                                  ,
-//        ValidAudience =
-//                                        builder.Configuration["Jwt:Issuer"]
-//                                  ,
-//        IssuerSigningKey =
-//    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-//    };
-//});
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters =
+    new TokenValidationParameters
+    {
+        ValidateIssuer = true
+                                  ,
+        ValidateAudience = true
+                                  ,
+        ValidateLifetime = true
+                                  ,
+        ValidateIssuerSigningKey = true
+                                  ,
+        ValidIssuer =
+                                        builder.Configuration["Jwt:Issuer"]
+                                  ,
+        ValidAudience =
+                                        builder.Configuration["Jwt:Issuer"]
+                                  ,
+        IssuerSigningKey =
+    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+
 
 builder.Services.Configure<IdentityOptions>(options => {
     //// Password settings if you want to ensure password strength.
